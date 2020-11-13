@@ -8,22 +8,38 @@ plugins {
 println("zcw ---> app hello1");
 println("zcw ---> app 调试");
 
+// 完整的方式  性能(如果直接读取，每次都要到 对应公共gradle，这样一次读取就好)
+def androidID = rootProject.ext.androidID
+
+
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.0"
+    compileSdkVersion androidID.compileSdkVersion
+    buildToolsVersion androidID.buildToolsVersion
 
     defaultConfig {
-        applicationId "top.zcwfeng.modularprojecct"
-        minSdkVersion 21
-        targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+        applicationId androidID.applicationId
+        minSdkVersion androidID.minSdkVersion
+        targetSdkVersion androidID.targetSdkVersion
+        versionCode androidID.versionCode
+        versionName androidID.versionName
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner androidID.testInstrumentationRunner
+
+        // 让我的Java代码也可以用
+        // 给Java代码暴漏，标记，正式环境 和 测试环境 的标记
+        // 组件化 和 集成化 的时候需要
+        buildConfigField("boolean", "isRelease", String.valueOf(isRelease))
     }
 
     buildTypes {
+
+        debug {
+            buildConfigField("String", "debug", "\"${url.debug}\"")
+        }
+
         release {
+            buildConfigField("String", "release", "\"${url.release}\"")
+
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -35,11 +51,21 @@ android {
 }
 
 dependencies {
-
+    // 提取公共依赖
+    /*
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.2.1'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'*/
+    dependenciesID.each {
+        k, v -> implementation v
+    }
+
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    if(isRelease){
+        implementation project(":login")
+        implementation project(":register")
+    }
 }

@@ -1,0 +1,44 @@
+//Groovy
+ext {
+
+    // 正式环境和测试环境
+    isRelease = false
+
+    url = [
+            debug  : "http://192.168.30.111/debug",
+            release: "https://www.zcwfeng.top/release"
+    ]
+
+    //建立map存储【基本config】
+    androidID = [
+            compileSdkVersion        : 30,
+            buildToolsVersion        : "30.0.0",
+
+            applicationId            : "top.zcwfeng.modularprojecct",
+            minSdkVersion            : 21,
+            targetSdkVersion         : 30,
+            versionCode              : 1,
+            versionName              : "1.0",
+
+            testInstrumentationRunner: "androidx.test.runner.AndroidJUnitRunner"
+    ]
+
+    // map 【抽取appid】
+    appID = [
+            app   : "top.zcwfeng.modularprojecct",
+            login : "top.zcwfeng.login",
+            regist: "top.zcwfeng.register"
+
+    ]
+
+    // 【抽取依赖】 肯能会有很多行
+    dependenciesID = [
+            "appcompat"       : "androidx.appcompat:appcompat:1.2.0",
+            "constraintlayout": "androidx.constraintlayout:constraintlayout:2.0.4",
+            "material"        : "com.google.android.material:material:1.2.1",
+            "vectordrawable"  : "androidx.vectordrawable:vectordrawable:1.1.0",
+            "fragment"        : "androidx.navigation:navigation-fragment:2.2.2",
+            "ui"              : "androidx.navigation:navigation-ui:2.2.2",
+            "extensions"      : "androidx.lifecycle:lifecycle-extensions:2.2.0",
+    ]
+}

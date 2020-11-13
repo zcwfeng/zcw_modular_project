@@ -1,4 +1,6 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+// 根目录下的build.gradle 引入公共的gradle
+apply from: 'zcw.gradle'
 buildscript {
     repositories {
         google()
