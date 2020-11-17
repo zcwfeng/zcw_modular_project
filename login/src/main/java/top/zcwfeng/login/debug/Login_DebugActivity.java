@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import top.zcwfeng.login.R;
 
-// import com.derry.login.R; // 不对了
 
 
 public class Login_DebugActivity extends AppCompatActivity {
